@@ -1,6 +1,6 @@
 package mainpackage;
 
-import client.ClientDaoImpl;
+import databaseconnectivity.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,15 +9,15 @@ import java.sql.Statement;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        ClientDaoImpl clientDao = new ClientDaoImpl();
-        Connection conn = clientDao.getConnection();
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        Connection conn = databaseConnector.getConnection();
         if(conn != null) {
             Statement statement = conn.createStatement();
             statement.executeUpdate("DROP TABLE IF EXISTS t1");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS t1(id INTEGER PRIMARY KEY, b TEXT)");
-            statement.executeUpdate("INSERT INTO t1 VALUES(1, 'A')");
-            statement.executeUpdate("INSERT INTO t1 VALUES(2, 'B')");
-            statement.executeUpdate("INSERT INTO t1 VALUES(3, 'D')");
+            statement.executeUpdate("INSERT INTO t1(b) VALUES('A')");
+            statement.executeUpdate("INSERT INTO t1(b) VALUES('B')");
+            statement.executeUpdate("INSERT INTO t1(b) VALUES('D')");
             ResultSet resultSet = statement.executeQuery("SELECT * FROM t1");
             while(resultSet.next()) {
                 System.out.println(resultSet.getString("id") + " " + resultSet.getString("b"));
@@ -29,9 +29,10 @@ public class Main {
             }
 
             statement.executeUpdate("DELETE FROM t1 WHERE id=1");
-
+            statement.executeUpdate("DROP TABLE IF EXISTS t1");
+            statement.executeUpdate("DROP TABLE IF EXISTS offers");
             statement.close();
-            clientDao.closeConnection();
+            databaseConnector.closeConnection();
         }
     }
 }

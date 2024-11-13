@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="485.0" prefWidth="761.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerController">
+    <Button layoutX="60.0" layoutY="370.0" mnemonicParsing="false" onAction="#setOffer" prefHeight="74.0" prefWidth="130.0" style="-fx-background-color: #595959;" text="Set offer" textAlignment="CENTER" textFill="WHITE">
+        <font>
+          <Font size="21.0" />
+        </font>
+    </Button>
+    <TextField fx:id="nameTxtField" layoutX="38.0" layoutY="156.0" promptText="set offer name" style="-fx-background-color: #595959; -fx-text-fill: white;">
+        <font>
+          <Font size="14.0" />
+        </font>
+    </TextField>
+    <TextField fx:id="seatsTxtField" layoutX="38.0" layoutY="212.0" promptText="set number of seats" style="-fx-background-color: #595959; -fx-text-fill: white;">
+        <font>
+          <Font size="14.0" />
+        </font>
+    </TextField>
+    <TextField fx:id="dateTxtField" layoutX="38.0" layoutY="274.0" promptText="set offer date" style="-fx-background-color: #595959; -fx-text-fill: white;">
+        <font>
+          <Font size="14.0" />
+        </font>
+    </TextField>
+   <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSellerOffers" style="-fx-background-color: #595959;" text="Back to your offers" textFill="WHITE" />
+   <TableView fx:id="tableView" layoutX="272.0" layoutY="13.0" prefHeight="462.0" prefWidth="474.0" style="-fx-background-color: #242320; -fx-border-color: white;">
+     <columns>
+       <TableColumn fx:id="idView" prefWidth="68.0" style="-fx-background-color: black; -fx-color-label-visible: white" text="ID" />
+       <TableColumn fx:id="offerNameView" prefWidth="145.5999755859375" style="-fx-background-color: black;" text="Offer Name" />
+         <TableColumn fx:id="seatsView" prefWidth="125.5999755859375" style="-fx-background-color: black;" text="Seats" />
+         <TableColumn fx:id="dateView" minWidth="7.2000732421875" prefWidth="134.40006103515623" style="-fx-background-color: black;" text="Date" />
+     </columns>
+   </TableView>
+</AnchorPane>

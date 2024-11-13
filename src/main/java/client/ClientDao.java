@@ -1,5 +1,10 @@
 package client;
 
 public interface ClientDao {
-    public void addClient(Client client);
+    public void showBoughtProducts(Client client);
+
+    public void getOffer(Client client);
+
+    public void showOffers(Client client);
+
 }

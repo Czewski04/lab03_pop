@@ -4,8 +4,12 @@ module lab03.pop {
     requires java.sql;
     requires org.xerial.sqlitejdbc;
     requires org.slf4j;
+    requires java.desktop;
 
     opens client to javafx.fxml;
+    opens seller to javafx.fxml;
 
     exports client;
+    exports seller;
+    exports others;
 }
