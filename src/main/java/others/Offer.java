@@ -5,24 +5,22 @@ import java.util.ArrayList;
 public class Offer {
     private int id;
     private String name;
-    private int numberOfSeats;
-    private String date;
-    private ArrayList<Integer> ClientsId;
+    private int clientId;
 
-    public ArrayList<Integer> getClientsId() {
-        return ClientsId;
+    public Offer(int id, String name, int clientId) {
+        this.id = id;
+        this.name = name;
+        this.clientId = clientId;
     }
 
-    public void setClientsId(ArrayList<Integer> clientsId) {
-        ClientsId = clientsId;
+    public Offer(){}
+
+    public int getClientId() {
+        return clientId;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 
     public int getId() {
@@ -39,13 +37,5 @@ public class Offer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getNumberOfSeats() {
-        return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(int numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
     }
 }

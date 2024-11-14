@@ -2,19 +2,18 @@ package others;
 
 public class Order {
     private int id;
-    private int ClientId;
-    private int OrganizerId;
-    private int EventId;
-    private boolean salesStared;
+    private int clientId;
+    private int organizerId;
+    private String offerName;
     private boolean soldOut;
     private boolean ended;
 
     public int getClientId() {
-        return ClientId;
+        return clientId;
     }
 
     public void setClientId(int clientId) {
-        ClientId = clientId;
+        this.clientId = clientId;
     }
 
     public boolean isEnded() {
@@ -23,14 +22,6 @@ public class Order {
 
     public void setEnded(boolean ended) {
         this.ended = ended;
-    }
-
-    public int getEventId() {
-        return EventId;
-    }
-
-    public void setEventId(int eventId) {
-        EventId = eventId;
     }
 
     public int getId() {
@@ -42,19 +33,11 @@ public class Order {
     }
 
     public int getOrganizerId() {
-        return OrganizerId;
+        return organizerId;
     }
 
     public void setOrganizerId(int organizerId) {
-        OrganizerId = organizerId;
-    }
-
-    public boolean isSalesStared() {
-        return salesStared;
-    }
-
-    public void setSalesStared(boolean salesStared) {
-        this.salesStared = salesStared;
+        this.organizerId = organizerId;
     }
 
     public boolean isSoldOut() {
@@ -63,5 +46,13 @@ public class Order {
 
     public void setSoldOut(boolean soldOut) {
         this.soldOut = soldOut;
+    }
+
+    public String getOfferName() {
+        return offerName;
+    }
+
+    public void setOfferName(String offerName) {
+        this.offerName = offerName;
     }
 }

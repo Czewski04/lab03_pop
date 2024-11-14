@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="client.ClientController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="485" prefWidth="761" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
+   <children>
+      <TableView fx:id="tableView" layoutX="272.0" layoutY="11.0" prefHeight="462.0" prefWidth="474.0" style="-fx-background-color: #242320; -fx-border-color: white;">
+         <columns>
+            <TableColumn fx:id="idView" prefWidth="118.4000244140625" style="-fx-background-color: black; -fx-text-fill: white;" text="ID" />
+            <TableColumn fx:id="offerNameView" prefWidth="353.5999755859375" style="-fx-background-color: black; -fx-text-fill: white;" text="Offer Name" />
+         </columns>
+      </TableView>
+      <Button fx:id="joinToEventButton" layoutX="14.0" layoutY="430.0" mnemonicParsing="false" onAction="#joinToEvent" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Join to selected event" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Refresh offers" textFill="WHITE" />
+   </children>
 </AnchorPane>

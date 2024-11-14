@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class ClientApp extends Application {
 
@@ -16,7 +17,7 @@ public class ClientApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/client/clientView.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/client/clientLoggerView.fxml")));
         primaryStage.setTitle("Client");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
