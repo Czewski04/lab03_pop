@@ -25,5 +25,10 @@
       </Button>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Refresh orders" textFill="WHITE" />
       <Button fx:id="myOffersButton" layoutX="150.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToOffersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="My offers" textFill="WHITE" />
+      <Button layoutX="14.0" layoutY="380.0" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Delete order" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

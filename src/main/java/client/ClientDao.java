@@ -1,16 +1,18 @@
 package client;
 
-import others.Offer;
-import others.Order;
+import orderoffer.Offer;
+import orderoffer.Order;
 
 import java.sql.SQLException;
 
 public interface ClientDao {
 
-    public void makeOrder(Order order) throws SQLException;
+    void makeOrder(Order order) throws SQLException;
 
-    public void updateOffer(Offer offer) throws SQLException;
+    void updateOffer(Offer offer) throws SQLException;
 
-    public void acceptEventDate(Order order) throws SQLException;
+    void acceptEventDate(Order order) throws SQLException;
+
+    void deleteOrder(Order order) throws SQLException;
 
 }

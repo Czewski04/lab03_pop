@@ -1,8 +1,8 @@
 package seller;
 
 import databaseconnectivity.DatabaseConnector;
-import others.Offer;
-import others.Order;
+import orderoffer.Offer;
+import orderoffer.Order;
 import java.sql.*;
 
 public class SellerDaoImpl implements SellerDao {
@@ -44,6 +44,7 @@ public class SellerDaoImpl implements SellerDao {
         }
     }
 
+    @Override
     public void cancelPlacedOrders(Order order) throws SQLException {
         DatabaseConnector db = new DatabaseConnector();
         Connection conn = db.getConnection();
@@ -58,6 +59,7 @@ public class SellerDaoImpl implements SellerDao {
         }
     }
 
+    @Override
     public void updateOrganizerId(Order order) throws SQLException {
         DatabaseConnector db = new DatabaseConnector();
         Connection conn = db.getConnection();
@@ -72,6 +74,7 @@ public class SellerDaoImpl implements SellerDao {
         }
     }
 
+    @Override
     public void updateOffer(Offer offer) throws SQLException {
         DatabaseConnector db = new DatabaseConnector();
         Connection conn = db.getConnection();
@@ -80,6 +83,20 @@ public class SellerDaoImpl implements SellerDao {
             PreparedStatement preparedStatement = conn.prepareStatement("UPDATE offers SET offerName = ? WHERE id = ?");
             preparedStatement.setString(1, offer.getName());
             preparedStatement.setInt(2, offer.getId());
+            preparedStatement.executeUpdate();
+            statement.close();
+            db.closeConnection();
+        }
+    }
+
+    @Override
+    public void deleteOffer(Offer offer) throws SQLException {
+        DatabaseConnector db = new DatabaseConnector();
+        Connection conn = db.getConnection();
+        if(conn != null) {
+            Statement statement = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM offers WHERE id = ?");
+            preparedStatement.setInt(1, offer.getId());
             preparedStatement.executeUpdate();
             statement.close();
             db.closeConnection();

@@ -12,8 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-import others.Offer;
-import others.SellerControllerAbstractClass;
+import orderoffer.Offer;
+import abstractcontrollerclasses.SellerControllerAbstractClass;
 
 import java.io.IOException;
 import java.sql.*;
@@ -69,5 +69,11 @@ public class SellerControllerOffersController extends SellerControllerAbstractCl
 
     public void refreshData() throws SQLException {
         tableView.setItems(showSellerOffers());
+    }
+
+    public void deleteOffer() throws SQLException {
+        SellerDaoImpl sellerDao = new SellerDaoImpl();
+        sellerDao.deleteOffer(tableView.getSelectionModel().getSelectedItem());
+        refreshData();
     }
 }

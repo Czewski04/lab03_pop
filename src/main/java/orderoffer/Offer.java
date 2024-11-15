@@ -1,6 +1,4 @@
-package others;
-
-import java.util.ArrayList;
+package orderoffer;
 
 public class Offer {
     private int id;

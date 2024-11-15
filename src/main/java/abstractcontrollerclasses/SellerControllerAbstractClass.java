@@ -1,4 +1,4 @@
-package others;
+package abstractcontrollerclasses;
 
 import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import orderoffer.Offer;
+import orderoffer.Order;
 
 import java.io.IOException;
 import java.sql.Connection;

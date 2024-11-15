@@ -1,4 +1,4 @@
-package others;
+package abstractcontrollerclasses;
 
 import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import orderoffer.Order;
 import organizer.Organizer;
 import organizer.OrganizerOrdersController;
 
@@ -21,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class OrganizerControllerAbstractClass {
+public abstract class OrganizerControllerAbstractClass {
 
     public ObservableList<Order> showOrganizerOrders(Organizer organizer) throws SQLException {
         ObservableList<Order> data = FXCollections.observableArrayList();

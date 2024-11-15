@@ -13,7 +13,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import others.Order;
+import orderoffer.Order;
+import seller.SellerDaoImpl;
+
 import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
@@ -111,6 +113,12 @@ public class ClientOrdersController {
         tableView.getSelectionModel().getSelectedItem().setConfirmed(true);
         ClientDaoImpl clientDao = new ClientDaoImpl();
         clientDao.acceptEventDate(tableView.getSelectionModel().getSelectedItem());
+        refreshTableView();
+    }
+
+    public void deleteOrder() throws SQLException {
+        ClientDaoImpl clientDao = new ClientDaoImpl();
+        clientDao.deleteOrder(tableView.getSelectionModel().getSelectedItem());
         refreshTableView();
     }
 }

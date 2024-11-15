@@ -12,6 +12,7 @@ module lab03.pop {
 
     exports client;
     exports seller;
-    exports others;
+    exports orderoffer;
     exports organizer;
+    exports abstractcontrollerclasses;
 }

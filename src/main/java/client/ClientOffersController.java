@@ -12,9 +12,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import others.Offer;
-import others.Order;
-import others.SellerControllerAbstractClass;
+import orderoffer.Offer;
+import orderoffer.Order;
+import abstractcontrollerclasses.SellerControllerAbstractClass;
 
 import java.io.IOException;
 import java.sql.*;

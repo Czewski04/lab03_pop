@@ -20,7 +20,7 @@
             <TableColumn fx:id="confirmedView" prefWidth="122.4000244140625" style="-fx-background-color: black; -fx-text-fill: white;" text="Confirmed by You" />
          </columns>
       </TableView>
-      <Button fx:id="setDateButton" layoutX="14.0" layoutY="515.0" mnemonicParsing="false" onAction="#editDate" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Edit order date" textFill="WHITE">
+      <Button fx:id="setDateButton" layoutX="14.0" layoutY="317.0" mnemonicParsing="false" onAction="#editDate" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Edit order date" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
@@ -32,5 +32,10 @@
          </font>
       </TextField>
       <Button layoutX="151.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToOrdersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Orders" textFill="WHITE" />
+      <Button layoutX="14.0" layoutY="516.0" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Delete order" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

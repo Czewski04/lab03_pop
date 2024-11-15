@@ -1,9 +1,11 @@
 package organizer;
 
-import others.Order;
+import orderoffer.Offer;
+import orderoffer.Order;
 
 import java.sql.SQLException;
 
 public interface OrganizerDao {
-    public void setDate(Order order) throws SQLException;
+    void setDate(Order order) throws SQLException;
+    void deleteOrder(Order order) throws SQLException;
 }

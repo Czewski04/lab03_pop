@@ -12,8 +12,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import others.Order;
-import others.SellerControllerAbstractClass;
+import orderoffer.Order;
+import abstractcontrollerclasses.SellerControllerAbstractClass;
 
 import java.io.IOException;
 import java.sql.SQLException;

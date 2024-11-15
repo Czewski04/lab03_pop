@@ -1,7 +1,7 @@
 package organizer;
 
 import databaseconnectivity.DatabaseConnector;
-import others.Order;
+import orderoffer.Order;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +19,20 @@ public class OrganizerDaoImpl implements OrganizerDao {
             PreparedStatement preparedStatement = conn.prepareStatement("UPDATE orders SET eventDate = ? WHERE id = ?");
             preparedStatement.setString(1, order.getDate());
             preparedStatement.setInt(2, order.getId());
+            preparedStatement.executeUpdate();
+            statement.close();
+            db.closeConnection();
+        }
+    }
+
+    @Override
+    public void deleteOrder(Order order) throws SQLException {
+        DatabaseConnector db = new DatabaseConnector();
+        Connection conn = db.getConnection();
+        if(conn != null) {
+            Statement statement = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM orders WHERE id = ?");
+            preparedStatement.setInt(1, order.getId());
             preparedStatement.executeUpdate();
             statement.close();
             db.closeConnection();
