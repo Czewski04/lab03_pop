@@ -1,12 +1,26 @@
 package others;
 
+
 public class Order {
     private int id;
     private int clientId;
     private int organizerId;
     private String offerName;
-    private boolean soldOut;
-    private boolean ended;
+    private String date;
+    private boolean placedOrder;
+    private boolean confirmed;
+
+    public Order(int id, int clientId, int organizerId, String offerName, String date, boolean placedOrder, boolean confirmed) {
+        this.id = id;
+        this.clientId = clientId;
+        this.organizerId = organizerId;
+        this.offerName = offerName;
+        this.date = date;
+        this.placedOrder = placedOrder;
+        this.confirmed = confirmed;
+    }
+
+    public Order(){}
 
     public int getClientId() {
         return clientId;
@@ -16,12 +30,20 @@ public class Order {
         this.clientId = clientId;
     }
 
-    public boolean isEnded() {
-        return ended;
+    public boolean isConfirmed() {
+        return confirmed;
     }
 
-    public void setEnded(boolean ended) {
-        this.ended = ended;
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public boolean isPlacedOrder() {
+        return placedOrder;
+    }
+
+    public void setPlacedOrder(boolean placedOrder) {
+        this.placedOrder = placedOrder;
     }
 
     public int getId() {
@@ -40,19 +62,19 @@ public class Order {
         this.organizerId = organizerId;
     }
 
-    public boolean isSoldOut() {
-        return soldOut;
-    }
-
-    public void setSoldOut(boolean soldOut) {
-        this.soldOut = soldOut;
-    }
-
     public String getOfferName() {
         return offerName;
     }
 
     public void setOfferName(String offerName) {
         this.offerName = offerName;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

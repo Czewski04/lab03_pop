@@ -7,6 +7,5 @@ import java.sql.SQLException;
 
 public interface SellerDao {
     public void addOffer(Offer offer) throws SQLException;
-    public void confirmOrder(Order order);
-    public void updateOrderStatus(Order order);
+    public void placeOrder(Order order) throws SQLException;
 }

@@ -31,6 +31,7 @@ public class Main {
             statement.executeUpdate("DELETE FROM t1 WHERE id=1");
             statement.executeUpdate("DROP TABLE IF EXISTS t1");
             statement.executeUpdate("DROP TABLE IF EXISTS offers");
+            statement.executeUpdate("DROP TABLE IF EXISTS orders");
             statement.close();
             databaseConnector.closeConnection();
         }

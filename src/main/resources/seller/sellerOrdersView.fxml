@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="575.0" prefWidth="1028.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerOrdersController">
+   <children>
+      <TableView fx:id="tableView" layoutX="273.0" layoutY="10.0" prefHeight="548.0" prefWidth="740.0" style="-fx-background-color: #242320; -fx-border-color: white;">
+         <columns>
+            <TableColumn fx:id="idView" prefWidth="57.5999755859375" style="-fx-background-color: black; -fx-text-fill: white;" text="ID" />
+            <TableColumn fx:id="offerNameView" prefWidth="147.199951171875" style="-fx-background-color: black; -fx-text-fill: white;" text="Offer Name" />
+            <TableColumn fx:id="clientIdView" prefWidth="91.99996948242188" style="-fx-background-color: black; -fx-text-fill: white;" text="Client ID" />
+            <TableColumn fx:id="organizerIdView" prefWidth="88.0" style="-fx-background-color: black; -fx-text-fill: white;" text="Organizer ID" />
+            <TableColumn fx:id="dateView" prefWidth="126.4000244140625" style="-fx-background-color: black; -fx-text-fill: white;" text="Date" />
+            <TableColumn fx:id="placedOrderView" prefWidth="104.7999267578125" style="-fx-background-color: black; -fx-text-fill: white;" text="Placed Order" />
+            <TableColumn fx:id="confirmedView" prefWidth="122.4000244140625" style="-fx-background-color: black; -fx-text-fill: white;" text="Confirmed by You" />
+         </columns>
+      </TableView>
+      <Button fx:id="placeOrderButton" layoutX="14.0" layoutY="515.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Pleace an order" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Refresh orders" textFill="WHITE" />
+      <Button fx:id="myOffersButton" layoutX="150.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToOffersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Offers" textFill="WHITE" />
+      <TextField fx:id="OrganizerIdTxtField" layoutX="48.0" layoutY="273.0" promptText="Set Organizer ID" style="-fx-background-color: #595959; -fx-text-fill: white;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>

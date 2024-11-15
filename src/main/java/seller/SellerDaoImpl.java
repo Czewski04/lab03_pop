@@ -3,7 +3,6 @@ package seller;
 import databaseconnectivity.DatabaseConnector;
 import others.Offer;
 import others.Order;
-
 import java.sql.*;
 
 public class SellerDaoImpl implements SellerDao {
@@ -30,13 +29,19 @@ public class SellerDaoImpl implements SellerDao {
     }
 
     @Override
-    public void confirmOrder(Order order) {
-
-    }
-
-    @Override
-    public void updateOrderStatus(Order order) {
-
+    public void placeOrder(Order order) throws SQLException {
+        DatabaseConnector db = new DatabaseConnector();
+        Connection conn = db.getConnection();
+        if(conn != null) {
+            Statement statement = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE orders SET placedOrder = ?, organizerId = ? WHERE id = ?");
+            preparedStatement.setBoolean(1, order.isPlacedOrder());
+            preparedStatement.setInt(2, order.getOrganizerId());
+            preparedStatement.setInt(3, order.getId());
+            preparedStatement.executeUpdate();
+            statement.close();
+            db.closeConnection();
+        }
     }
 
 }

@@ -14,15 +14,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import others.Offer;
+import others.Order;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Objects;
 
-public class ClientController {
+public class ClientOffersController {
 
     Client client = new Client();
 
@@ -33,6 +31,10 @@ public class ClientController {
     @FXML
     private  TableColumn<Offer, String> offerNameView;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     public void initializeTableView() throws SQLException {
         idView.setCellValueFactory(new PropertyValueFactory<>("id"));
         offerNameView.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -42,12 +44,12 @@ public class ClientController {
     private ObservableList<Offer> showClientOffers() throws SQLException {
         ObservableList<Offer> data = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM offers";
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
         Connection conn = databaseConnector.getConnection();
-        Statement statement = conn.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM offers WHERE clientId=?");
+        preparedStatement.setInt(1, 0);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
@@ -59,16 +61,10 @@ public class ClientController {
     }
 
     public void joinToEvent() throws SQLException {
-        try{
-            if(tableView.getSelectionModel().getSelectedItem().getClientId() !=0) throw new Exception("Event is already full");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            return;
-        }
         tableView.getSelectionModel().getSelectedItem().setClientId(client.getId());
         ClientDaoImpl clientDao = new ClientDaoImpl();
         clientDao.updateOffer(tableView.getSelectionModel().getSelectedItem());
+        setOrder(tableView.getSelectionModel().getSelectedItem());
         refreshTableView();
     }
 
@@ -83,6 +79,28 @@ public class ClientController {
 
     public void refreshTableView() throws SQLException {
         tableView.setItems(showClientOffers());
+    }
+
+    public void setOrder(Offer offer) throws SQLException {
+        Order order = new Order();
+        order.setOfferName(offer.getName());
+        order.setClientId(client.getId());
+        order.setDate("");
+        ClientDaoImpl clientDao = new ClientDaoImpl();
+        clientDao.makeOrder(order);
+    }
+
+    public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/client/clientOrdersView.fxml")));
+        root = fxmlLoader.load();
+
+        ClientOrdersController controller = fxmlLoader.getController();
+        controller.setClientLogin(client.getId());
+
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

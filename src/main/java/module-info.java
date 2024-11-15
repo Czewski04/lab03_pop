@@ -8,8 +8,10 @@ module lab03.pop {
 
     opens client to javafx.fxml;
     opens seller to javafx.fxml;
+    opens organizer to javafx.fxml;
 
     exports client;
     exports seller;
     exports others;
+    exports organizer;
 }

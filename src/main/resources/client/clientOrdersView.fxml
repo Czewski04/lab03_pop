@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="539.0" prefWidth="946.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientOrdersController">
+   <children>
+      <TableView fx:id="tableView" layoutX="269.0" layoutY="6.0" prefHeight="518.0" prefWidth="662.0" style="-fx-background-color: #242320; -fx-border-color: white;">
+         <columns>
+            <TableColumn fx:id="idView" prefWidth="60.800048828125" style="-fx-background-color: black; -fx-text-fill: white;" text="ID" />
+            <TableColumn fx:id="offerNameView" prefWidth="143.199951171875" style="-fx-background-color: black; -fx-text-fill: white;" text="Offer Name" />
+            <TableColumn fx:id="organizerIdView" prefWidth="104.800048828125" style="-fx-background-color: black; -fx-text-fill: white;" text="Organizer ID" />
+            <TableColumn fx:id="dateView" prefWidth="128.0001220703125" style="-fx-background-color: black; -fx-text-fill: white;" text="Date" />
+            <TableColumn fx:id="placedOrderView" prefWidth="90.4000244140625" style="-fx-background-color: black; -fx-text-fill: white;" text="Placed Order" />
+            <TableColumn fx:id="confirmedView" prefWidth="134.400146484375" style="-fx-background-color: black; -fx-text-fill: white;" text="Confirmed by You" />
+         </columns>
+      </TableView>
+      <Button fx:id="confirmDateButton" layoutX="14.0" layoutY="472.0" mnemonicParsing="false" onAction="#confrimDate" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Confirm selected event date" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Refresh orders" textFill="WHITE" />
+      <Button fx:id="myOffersButton" layoutX="150.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToOffersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="My offers" textFill="WHITE" />
+   </children>
+</AnchorPane>

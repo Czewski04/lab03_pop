@@ -1,5 +1,7 @@
 package seller;
 
+import client.ClientDaoImpl;
+import client.ClientOrdersController;
 import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,14 +18,11 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import others.Offer;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Objects;
 
 
-public class SellerController {
+public class SellerOffersController {
     @FXML
     private TableView<Offer> tableView;
     @FXML
@@ -45,11 +44,13 @@ public class SellerController {
         offer.setClientId(0);
         SellerDaoImpl sellerDao = new SellerDaoImpl();
         sellerDao.addOffer(offer);
-        tableView.setItems(showSellerOffers());
+        refreshData();
     }
 
-    public void switchToSellerOffers(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/seller/sellerViewOffers.fxml")));
+    public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerOrdersView.fxml")));
+        root = fxmlLoader.load();
+
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -65,12 +66,11 @@ public class SellerController {
     private ObservableList<Offer> showSellerOffers() throws SQLException {
         ObservableList<Offer> data = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM offers";
-
         DatabaseConnector databaseConnector = new DatabaseConnector();
         Connection conn = databaseConnector.getConnection();
-        Statement statement = conn.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM offers WHERE clientId=?");
+        preparedStatement.setInt(1, 0);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
