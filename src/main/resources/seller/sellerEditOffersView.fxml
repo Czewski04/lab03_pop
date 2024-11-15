@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="485.0" prefWidth="761.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerEditOffersController">
+   <children>
+      <Button layoutX="59.0" layoutY="243.0" mnemonicParsing="false" onAction="#editOffer" prefHeight="74.0" prefWidth="130.0" style="-fx-background-color: #595959;" text="Edit offer" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Button>
+      <TextField fx:id="nameTxtField" layoutX="38.0" layoutY="163.0" promptText="set offer name" style="-fx-background-color: #595959; -fx-text-fill: white;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshData" style="-fx-background-color: #595959;" text="Refresh offers" textFill="WHITE" />
+      <TableView fx:id="tableView" layoutX="272.0" layoutY="13.0" prefHeight="462.0" prefWidth="474.0" style="-fx-background-color: #242320; -fx-border-color: white;">
+         <columns>
+            <TableColumn fx:id="idView" prefWidth="64.800048828125" style="-fx-background-color: black; -fx-text-fill: white;" text="ID" />
+            <TableColumn fx:id="offerNameView" prefWidth="260.0" style="-fx-background-color: black; -fx-text-fill: white;" text="Offer Name" />
+            <TableColumn fx:id="clientsIdView" prefWidth="147.2000732421875" style="-fx-background-color: black; -fx-text-fill: white;" text="Client Id" />
+         </columns>
+      </TableView>
+      <Button fx:id="myOffersButton" layoutX="148.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchToOffersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Offers" textFill="WHITE" />
+   </children>
+</AnchorPane>

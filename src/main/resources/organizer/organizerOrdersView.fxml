@@ -31,5 +31,6 @@
             <Font size="14.0" />
          </font>
       </TextField>
+      <Button layoutX="151.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToFinishedOrdersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Finished Orders" textFill="WHITE" />
    </children>
 </AnchorPane>

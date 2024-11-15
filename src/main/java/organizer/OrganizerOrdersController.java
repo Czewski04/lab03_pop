@@ -1,18 +1,26 @@
 package organizer;
 
 import client.Client;
+import client.ClientOrdersController;
 import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import others.Offer;
 import others.Order;
 import seller.SellerDaoImpl;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,6 +50,10 @@ public class OrganizerOrdersController {
     @FXML
     private  TableColumn<Order, String> offerNameView;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     public void initializeTableView() throws SQLException {
         idView.setCellValueFactory(new PropertyValueFactory<>("id"));
         offerNameView.setCellValueFactory(new PropertyValueFactory<>("offerName"));
@@ -50,7 +62,6 @@ public class OrganizerOrdersController {
         confirmedView.setCellValueFactory(new PropertyValueFactory<>("confirmed"));
         placedOrderView.setCellValueFactory(new PropertyValueFactory<>("placedOrder"));
         clientIdView.setCellValueFactory(new PropertyValueFactory<>("clientId"));
-        refreshTableView();
     }
 
     private ObservableList<Order> showOrganizerOrders() throws SQLException {
@@ -59,7 +70,7 @@ public class OrganizerOrdersController {
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
         Connection conn = databaseConnector.getConnection();
-        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM orders WHERE organizerId = ?");
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM orders WHERE organizerId = ? AND confirmed = false");
         preparedStatement.setInt(1, organizer.getId());
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -76,7 +87,7 @@ public class OrganizerOrdersController {
         return data;
     }
 
-    public void setClientLogin(int id){
+    public void setOrganizerLogin(int id){
         organizer.setId(id);
         try{
             initializeTableView();
@@ -94,6 +105,19 @@ public class OrganizerOrdersController {
         OrganizerDaoImpl organizerDao = new OrganizerDaoImpl();
         organizerDao.setDate(tableView.getSelectionModel().getSelectedItem());
         refreshTableView();
+    }
+
+    public void switchToFinishedOrdersView(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/organizer/organizerFinishedOrdersView.fxml")));
+        root = fxmlLoader.load();
+
+        OrganizerFinishedOrdersController controller = fxmlLoader.getController();
+        controller.setOrganizerLogin(organizer.getId());
+
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

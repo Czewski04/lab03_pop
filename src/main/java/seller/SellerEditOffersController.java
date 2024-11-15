@@ -1,13 +1,12 @@
 package seller;
 
-import client.ClientDaoImpl;
-import client.ClientOrdersController;
 import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -15,18 +14,21 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 import others.Offer;
+
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
+public class SellerEditOffersController {
 
-public class SellerOffersController {
     @FXML
     private TableView<Offer> tableView;
     @FXML
-    private  TableColumn<Offer, Integer> idView;
+    private TableColumn<Offer, Integer> idView;
     @FXML
     private  TableColumn<Offer, String> offerNameView;
     @FXML
@@ -37,35 +39,6 @@ public class SellerOffersController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-    public void setOffer() throws SQLException {
-        Offer offer = new Offer();
-        offer.setName(nameTxtField.getText());
-        offer.setClientId(0);
-        SellerDaoImpl sellerDao = new SellerDaoImpl();
-        sellerDao.addOffer(offer);
-        refreshData();
-    }
-
-    public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerOrdersView.fxml")));
-        root = fxmlLoader.load();
-
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchToEditOffersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerEditOfferView.fxml")));
-        root = fxmlLoader.load();
-
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
     public void initialize() throws SQLException {
         idView.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -93,5 +66,22 @@ public class SellerOffersController {
 
     public void refreshData() throws SQLException {
         tableView.setItems(showSellerOffers());
+    }
+
+    public void switchToOffersView(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerOffersView.fxml")));
+        root = fxmlLoader.load();
+
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void editOffer() throws SQLException {
+        tableView.getSelectionModel().getSelectedItem().setName(Objects.requireNonNull(nameTxtField.getText()));
+        SellerDaoImpl sellerDao = new SellerDaoImpl();
+        sellerDao.updateOffer(tableView.getSelectionModel().getSelectedItem());
+        refreshData();
     }
 }

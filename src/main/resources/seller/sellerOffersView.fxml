@@ -27,4 +27,5 @@
      </columns>
    </TableView>
    <Button fx:id="myOffersButton" layoutX="148.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchToOrdersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Orders" textFill="WHITE" />
+   <Button layoutX="80.0" layoutY="54.0" mnemonicParsing="false" onAction="#switchToEditOffersView" prefHeight="25.0" prefWidth="89.0" style="-fx-background-color: #595959;" text="Edit offers" textFill="WHITE" />
 </AnchorPane>

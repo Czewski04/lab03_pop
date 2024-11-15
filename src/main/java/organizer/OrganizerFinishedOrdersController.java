@@ -1,7 +1,6 @@
-package seller;
+package organizer;
 
-import client.ClientDaoImpl;
-import client.ClientOffersController;
+import client.ClientOrdersController;
 import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,9 +24,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class SellerOrdersController {
+public class OrganizerFinishedOrdersController {
+
+    Organizer organizer = new Organizer();
+
     @FXML
-    private TextField OrganizerIdTxtField;
+    private TextField DateTxtField;
     @FXML
     private TableColumn<Order, Integer> organizerIdView;
     @FXML
@@ -49,7 +51,24 @@ public class SellerOrdersController {
     private Scene scene;
     private Parent root;
 
-    public void initialize() throws SQLException {
+    public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/organizer/organizerOrdersView.fxml")));
+        root = fxmlLoader.load();
+
+        OrganizerOrdersController controller = fxmlLoader.getController();
+        controller.setOrganizerLogin(organizer.getId());
+
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void refreshTableView() throws SQLException {
+        tableView.setItems(showOrganizerOrders());
+    }
+
+    public void initializeTableView() throws SQLException {
         idView.setCellValueFactory(new PropertyValueFactory<>("id"));
         offerNameView.setCellValueFactory(new PropertyValueFactory<>("offerName"));
         organizerIdView.setCellValueFactory(new PropertyValueFactory<>("organizerId"));
@@ -59,13 +78,14 @@ public class SellerOrdersController {
         clientIdView.setCellValueFactory(new PropertyValueFactory<>("clientId"));
     }
 
-    private ObservableList<Order> showSellerOrders() throws SQLException {
+    private ObservableList<Order> showOrganizerOrders() throws SQLException {
         ObservableList<Order> data = FXCollections.observableArrayList();
 
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
         Connection conn = databaseConnector.getConnection();
-        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM orders");;
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM orders WHERE organizerId = ? AND confirmed = TRUE");
+        preparedStatement.setInt(1, organizer.getId());
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
@@ -81,35 +101,12 @@ public class SellerOrdersController {
         return data;
     }
 
-    public void switchToOffersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerOffersView.fxml")));
-        root = fxmlLoader.load();
-
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchToEditOrdersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerEditOrdersView.fxml")));
-        root = fxmlLoader.load();
-
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void refreshTableView() throws SQLException {
-        tableView.setItems(showSellerOrders());
-    }
-
-    public void placeOrder() throws SQLException {
-        tableView.getSelectionModel().getSelectedItem().setPlacedOrder(true);
-        tableView.getSelectionModel().getSelectedItem().setOrganizerId(Integer.parseInt(Objects.requireNonNull(OrganizerIdTxtField.getText())));
-        SellerDaoImpl sellerDao = new SellerDaoImpl();
-        sellerDao.placeOrder(tableView.getSelectionModel().getSelectedItem());
-        refreshTableView();
+    public void setOrganizerLogin(int id){
+        organizer.setId(id);
+        try{
+            initializeTableView();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

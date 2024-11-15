@@ -1,7 +1,5 @@
 package seller;
 
-import client.ClientDaoImpl;
-import client.ClientOffersController;
 import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,9 +23,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class SellerOrdersController {
+public class SellerEditOrdersController {
+
     @FXML
     private TextField OrganizerIdTxtField;
+    @FXML
+    private TextField PlacedOrderTxtField;
     @FXML
     private TableColumn<Order, Integer> organizerIdView;
     @FXML
@@ -81,8 +82,8 @@ public class SellerOrdersController {
         return data;
     }
 
-    public void switchToOffersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerOffersView.fxml")));
+    public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerOrdersView.fxml")));
         root = fxmlLoader.load();
 
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -91,22 +92,13 @@ public class SellerOrdersController {
         stage.show();
     }
 
-    public void switchToEditOrdersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerEditOrdersView.fxml")));
-        root = fxmlLoader.load();
-
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
     public void refreshTableView() throws SQLException {
         tableView.setItems(showSellerOrders());
     }
 
-    public void placeOrder() throws SQLException {
-        tableView.getSelectionModel().getSelectedItem().setPlacedOrder(true);
+    public void editOrder() throws SQLException {
+        tableView.getSelectionModel().getSelectedItem().setPlacedOrder(Boolean.parseBoolean(Objects.requireNonNull(PlacedOrderTxtField.getText())));
         tableView.getSelectionModel().getSelectedItem().setOrganizerId(Integer.parseInt(Objects.requireNonNull(OrganizerIdTxtField.getText())));
         SellerDaoImpl sellerDao = new SellerDaoImpl();
         sellerDao.placeOrder(tableView.getSelectionModel().getSelectedItem());

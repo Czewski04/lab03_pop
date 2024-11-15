@@ -30,7 +30,7 @@ public class OrganizerLoggerController {
         root = fxmlLoader.load();
 
         OrganizerOrdersController controller = fxmlLoader.getController();
-        controller.setClientLogin(readLogin());
+        controller.setOrganizerLogin(readLogin());
 
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
