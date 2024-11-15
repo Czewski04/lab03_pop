@@ -57,7 +57,6 @@ public class SellerOrdersController {
         confirmedView.setCellValueFactory(new PropertyValueFactory<>("confirmed"));
         placedOrderView.setCellValueFactory(new PropertyValueFactory<>("placedOrder"));
         clientIdView.setCellValueFactory(new PropertyValueFactory<>("clientId"));
-        refreshTableView();
     }
 
     private ObservableList<Order> showSellerOrders() throws SQLException {
