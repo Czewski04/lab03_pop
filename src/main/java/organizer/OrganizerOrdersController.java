@@ -120,4 +120,18 @@ public class OrganizerOrdersController {
         stage.show();
     }
 
+    public void switchToEditOrdersView(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/organizer/organizerEditOrdersView.fxml")));
+        root = fxmlLoader.load();
+
+        OrganizerEditOrdersController controller = fxmlLoader.getController();
+        controller.setOrganizerLogin(organizer.getId());
+
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
 }

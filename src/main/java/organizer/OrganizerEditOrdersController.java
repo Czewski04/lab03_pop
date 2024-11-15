@@ -1,4 +1,4 @@
-package seller;
+package organizer;
 
 import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
@@ -23,10 +23,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class SellerEditOrdersController {
+public class OrganizerEditOrdersController {
+
+    Organizer organizer = new Organizer();
 
     @FXML
-    private TextField OrganizerIdTxtField;
+    private TextField DateTxtField;
     @FXML
     private TableColumn<Order, Integer> organizerIdView;
     @FXML
@@ -48,7 +50,7 @@ public class SellerEditOrdersController {
     private Scene scene;
     private Parent root;
 
-    public void initialize() throws SQLException {
+    public void initializeTableView() throws SQLException {
         idView.setCellValueFactory(new PropertyValueFactory<>("id"));
         offerNameView.setCellValueFactory(new PropertyValueFactory<>("offerName"));
         organizerIdView.setCellValueFactory(new PropertyValueFactory<>("organizerId"));
@@ -58,13 +60,14 @@ public class SellerEditOrdersController {
         clientIdView.setCellValueFactory(new PropertyValueFactory<>("clientId"));
     }
 
-    private ObservableList<Order> showSellerOrders() throws SQLException {
+    private ObservableList<Order> showOrganizerOrders() throws SQLException {
         ObservableList<Order> data = FXCollections.observableArrayList();
 
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
         Connection conn = databaseConnector.getConnection();
-        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM orders");;
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM orders WHERE organizerId = ? AND confirmed = false");
+        preparedStatement.setInt(1, organizer.getId());
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
@@ -80,9 +83,25 @@ public class SellerEditOrdersController {
         return data;
     }
 
+    public void setOrganizerLogin(int id){
+        organizer.setId(id);
+        try{
+            initializeTableView();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshTableView() throws SQLException {
+        tableView.setItems(showOrganizerOrders());
+    }
+
     public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerOrdersView.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/organizer/organizerOrdersView.fxml")));
         root = fxmlLoader.load();
+
+        OrganizerOrdersController controller = fxmlLoader.getController();
+        controller.setOrganizerLogin(organizer.getId());
 
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -90,22 +109,10 @@ public class SellerEditOrdersController {
         stage.show();
     }
 
-
-    public void refreshTableView() throws SQLException {
-        tableView.setItems(showSellerOrders());
-    }
-
-    public void editOrder() throws SQLException {
-        tableView.getSelectionModel().getSelectedItem().setOrganizerId(Integer.parseInt(Objects.requireNonNull(OrganizerIdTxtField.getText())));
-        SellerDaoImpl sellerDao = new SellerDaoImpl();
-        sellerDao.updateOrganizerId(tableView.getSelectionModel().getSelectedItem());
-        refreshTableView();
-    }
-
-    public void cancelPlacedOrder() throws SQLException {
-        tableView.getSelectionModel().getSelectedItem().setPlacedOrder(false);
-        SellerDaoImpl sellerDao = new SellerDaoImpl();
-        sellerDao.cancelPlacedOrders(tableView.getSelectionModel().getSelectedItem());
+    public void editDate() throws SQLException {
+        tableView.getSelectionModel().getSelectedItem().setDate(Objects.requireNonNull(DateTxtField.getText()));
+        OrganizerDaoImpl organizerDao = new OrganizerDaoImpl();
+        organizerDao.setDate(tableView.getSelectionModel().getSelectedItem());
         refreshTableView();
     }
 }

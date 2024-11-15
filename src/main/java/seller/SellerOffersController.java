@@ -58,7 +58,7 @@ public class SellerOffersController {
     }
 
     public void switchToEditOffersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerEditOfferView.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/seller/sellerEditOffersView.fxml")));
         root = fxmlLoader.load();
 
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

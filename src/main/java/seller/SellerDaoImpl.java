@@ -34,10 +34,38 @@ public class SellerDaoImpl implements SellerDao {
         Connection conn = db.getConnection();
         if(conn != null) {
             Statement statement = conn.createStatement();
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE orders SET placedOrder = ?, organizerId = ? WHERE id = ?");
-            preparedStatement.setBoolean(1, order.isPlacedOrder());
-            preparedStatement.setInt(2, order.getOrganizerId());
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE orders SET organizerId = ?, placedOrder = ? WHERE id = ?");
+            preparedStatement.setInt(1, order.getOrganizerId());
+            preparedStatement.setBoolean(2, order.isPlacedOrder());
             preparedStatement.setInt(3, order.getId());
+            preparedStatement.executeUpdate();
+            statement.close();
+            db.closeConnection();
+        }
+    }
+
+    public void cancelPlacedOrders(Order order) throws SQLException {
+        DatabaseConnector db = new DatabaseConnector();
+        Connection conn = db.getConnection();
+        if(conn != null) {
+            Statement statement = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE orders SET placedOrder = ? WHERE id = ?");
+            preparedStatement.setBoolean(1, order.isPlacedOrder());
+            preparedStatement.setInt(2, order.getId());
+            preparedStatement.executeUpdate();
+            statement.close();
+            db.closeConnection();
+        }
+    }
+
+    public void updateOrganizerId(Order order) throws SQLException {
+        DatabaseConnector db = new DatabaseConnector();
+        Connection conn = db.getConnection();
+        if(conn != null) {
+            Statement statement = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE orders SET organizerId = ? WHERE id = ?");
+            preparedStatement.setInt(1, order.getOrganizerId());
+            preparedStatement.setInt(2, order.getId());
             preparedStatement.executeUpdate();
             statement.close();
             db.closeConnection();
