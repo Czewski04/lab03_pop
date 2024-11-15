@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import others.Order;
+import others.OrganizerControllerAbstractClass;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,7 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class OrganizerFinishedOrdersController {
+public class OrganizerFinishedOrdersController extends OrganizerControllerAbstractClass {
 
     Organizer organizer = new Organizer();
 
@@ -52,16 +53,7 @@ public class OrganizerFinishedOrdersController {
     private Parent root;
 
     public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/organizer/organizerOrdersView.fxml")));
-        root = fxmlLoader.load();
-
-        OrganizerOrdersController controller = fxmlLoader.getController();
-        controller.setOrganizerLogin(organizer.getId());
-
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        switchToOrdersView(actionEvent,stage,scene,root, organizer);
     }
 
     public void refreshTableView() throws SQLException {
@@ -69,13 +61,7 @@ public class OrganizerFinishedOrdersController {
     }
 
     public void initializeTableView() throws SQLException {
-        idView.setCellValueFactory(new PropertyValueFactory<>("id"));
-        offerNameView.setCellValueFactory(new PropertyValueFactory<>("offerName"));
-        organizerIdView.setCellValueFactory(new PropertyValueFactory<>("organizerId"));
-        dateView.setCellValueFactory(new PropertyValueFactory<>("date"));
-        confirmedView.setCellValueFactory(new PropertyValueFactory<>("confirmed"));
-        placedOrderView.setCellValueFactory(new PropertyValueFactory<>("placedOrder"));
-        clientIdView.setCellValueFactory(new PropertyValueFactory<>("clientId"));
+        ordersInitialize(idView, offerNameView,organizerIdView,dateView,confirmedView,placedOrderView,clientIdView);
     }
 
     private ObservableList<Order> showOrganizerOrders() throws SQLException {

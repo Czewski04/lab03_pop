@@ -1,6 +1,5 @@
 package client;
 
-import databaseconnectivity.DatabaseConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,12 +14,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import others.Offer;
 import others.Order;
+import others.SellerControllerAbstractClass;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
 
-public class ClientOffersController {
+public class ClientOffersController extends SellerControllerAbstractClass {
 
     Client client = new Client();
 
@@ -42,22 +42,7 @@ public class ClientOffersController {
     }
 
     private ObservableList<Offer> showClientOffers() throws SQLException {
-        ObservableList<Offer> data = FXCollections.observableArrayList();
-
-
-        DatabaseConnector databaseConnector = new DatabaseConnector();
-        Connection conn = databaseConnector.getConnection();
-        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM offers WHERE clientId=?");
-        preparedStatement.setInt(1, 0);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String name = resultSet.getString("offerName");
-            int clientId = resultSet.getInt("clientId");
-            data.add(new Offer(id, name, clientId));
-        }
-        return data;
+        return FXCollections.observableArrayList(showOffersAbstract());
     }
 
     public void joinToEvent() throws SQLException {

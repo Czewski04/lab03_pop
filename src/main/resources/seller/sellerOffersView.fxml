@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="485.0" prefWidth="761.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerOffersController">
+<AnchorPane prefHeight="485.0" prefWidth="761.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerControllerOffersController">
     <Button layoutX="59.0" layoutY="243.0" mnemonicParsing="false" onAction="#setOffer" prefHeight="74.0" prefWidth="130.0" style="-fx-background-color: #595959;" text="Set offer" textAlignment="CENTER" textFill="WHITE">
         <font>
           <Font size="21.0" />

@@ -99,7 +99,7 @@ public class ClientOrdersController {
         }
     }
 
-    public void confrimDate() throws SQLException {
+    public void confirmDate() throws SQLException {
         try{
             if(tableView.getSelectionModel().getSelectedItem().getDate().isEmpty()) throw new Exception("Event isn't ready to confirm");
             if(tableView.getSelectionModel().getSelectedItem().isConfirmed()) throw new Exception("Event is already confirmed");

@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import others.Offer;
 import others.Order;
+import others.OrganizerControllerAbstractClass;
 import seller.SellerDaoImpl;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class OrganizerOrdersController {
+public class OrganizerOrdersController extends OrganizerControllerAbstractClass {
 
     Organizer organizer = new Organizer();
 
@@ -55,36 +56,11 @@ public class OrganizerOrdersController {
     private Parent root;
 
     public void initializeTableView() throws SQLException {
-        idView.setCellValueFactory(new PropertyValueFactory<>("id"));
-        offerNameView.setCellValueFactory(new PropertyValueFactory<>("offerName"));
-        organizerIdView.setCellValueFactory(new PropertyValueFactory<>("organizerId"));
-        dateView.setCellValueFactory(new PropertyValueFactory<>("date"));
-        confirmedView.setCellValueFactory(new PropertyValueFactory<>("confirmed"));
-        placedOrderView.setCellValueFactory(new PropertyValueFactory<>("placedOrder"));
-        clientIdView.setCellValueFactory(new PropertyValueFactory<>("clientId"));
+        ordersInitialize(idView, offerNameView,organizerIdView,dateView,confirmedView,placedOrderView,clientIdView);
     }
 
     private ObservableList<Order> showOrganizerOrders() throws SQLException {
-        ObservableList<Order> data = FXCollections.observableArrayList();
-
-
-        DatabaseConnector databaseConnector = new DatabaseConnector();
-        Connection conn = databaseConnector.getConnection();
-        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM orders WHERE organizerId = ? AND confirmed = false");
-        preparedStatement.setInt(1, organizer.getId());
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            int organizerId = resultSet.getInt("organizerId");
-            String offerName = resultSet.getString("offerName");
-            int clientId = resultSet.getInt("clientId");
-            String date = resultSet.getString("eventDate");
-            boolean confirmed = resultSet.getBoolean("confirmed");
-            boolean placedOrder = resultSet.getBoolean("placedOrder");
-            data.add(new Order(id, clientId, organizerId, offerName, date, placedOrder, confirmed));
-        }
-        return data;
+        return FXCollections.observableArrayList(showOrganizerOrders(organizer));
     }
 
     public void setOrganizerLogin(int id){

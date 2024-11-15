@@ -18,7 +18,7 @@
             <TableColumn fx:id="confirmedView" prefWidth="134.400146484375" style="-fx-background-color: black; -fx-text-fill: white;" text="Confirmed by You" />
          </columns>
       </TableView>
-      <Button fx:id="confirmDateButton" layoutX="14.0" layoutY="472.0" mnemonicParsing="false" onAction="#confrimDate" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Confirm selected event date" textFill="WHITE">
+      <Button fx:id="confirmDateButton" layoutX="14.0" layoutY="472.0" mnemonicParsing="false" onAction="#confirmDate" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Confirm selected event date" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
