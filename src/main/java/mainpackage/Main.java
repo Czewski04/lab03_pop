@@ -37,3 +37,8 @@ public class Main {
         }
     }
 }
+
+// edytowanie rekordów z poziomu sellera, organzera i clienta
+// obsługa licznych wyjątków
+// ujednolicenie rozmiaru aplikacji
+// poprawa kolorów wprowadzanego loginu
