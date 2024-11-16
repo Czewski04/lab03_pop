@@ -8,7 +8,7 @@ public class DatabaseConnector {
     private Connection connection;
 
     public DatabaseConnector(){
-        String url = "jdbc:sqlite:src/database.db";
+        String url = "jdbc:sqlite:database.db";
         try{
             connection = DriverManager.getConnection(url);
             System.out.println("Connected to database");
