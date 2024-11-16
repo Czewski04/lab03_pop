@@ -3,9 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="575.0" prefWidth="1028.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="organizer.OrganizerFinishedOrdersController">
    <children>
@@ -20,17 +18,7 @@
             <TableColumn fx:id="confirmedView" prefWidth="122.4000244140625" style="-fx-background-color: black; -fx-text-fill: white;" text="Confirmed by You" />
          </columns>
       </TableView>
-      <Button fx:id="setDateButton" layoutX="14.0" layoutY="515.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Send order to Client" textFill="WHITE">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Refresh orders" textFill="WHITE" />
-      <TextField fx:id="DateTxtField" layoutX="48.0" layoutY="273.0" promptText="Set Date" style="-fx-background-color: #595959; -fx-text-fill: white;">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextField>
       <Button layoutX="151.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToOrdersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Orders" textFill="WHITE" />
    </children>
 </AnchorPane>

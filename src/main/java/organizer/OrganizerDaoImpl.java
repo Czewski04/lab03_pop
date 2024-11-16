@@ -31,9 +31,14 @@ public class OrganizerDaoImpl implements OrganizerDao {
         Connection conn = db.getConnection();
         if(conn != null) {
             Statement statement = conn.createStatement();
-            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM orders WHERE id = ?");
-            preparedStatement.setInt(1, order.getId());
-            preparedStatement.executeUpdate();
+
+            PreparedStatement preparedStatement1 = conn.prepareStatement("UPDATE offers SET clientID = 0 WHERE id = ?");
+            preparedStatement1.setInt(1, order.getOfferId());
+            preparedStatement1.executeUpdate();
+
+            PreparedStatement preparedStatement2 = conn.prepareStatement("DELETE FROM orders WHERE id = ?");
+            preparedStatement2.setInt(1, order.getId());
+            preparedStatement2.executeUpdate();
             statement.close();
             db.closeConnection();
         }

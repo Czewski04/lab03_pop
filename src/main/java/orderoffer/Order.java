@@ -6,15 +6,17 @@ public class Order {
     private int clientId;
     private int organizerId;
     private String offerName;
+    private int offerId;
     private String date;
     private boolean placedOrder;
     private boolean confirmed;
 
-    public Order(int id, int clientId, int organizerId, String offerName, String date, boolean placedOrder, boolean confirmed) {
+    public Order(int id, int clientId, int organizerId, String offerName, String date, boolean placedOrder, boolean confirmed, int offerId) {
         this.id = id;
         this.clientId = clientId;
         this.organizerId = organizerId;
         this.offerName = offerName;
+        this.offerId = offerId;
         this.date = date;
         this.placedOrder = placedOrder;
         this.confirmed = confirmed;
@@ -76,5 +78,12 @@ public class Order {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getOfferId() {
+        return offerId;
+    }
+    public void setOfferId(int offerId) {
+        this.offerId = offerId;
     }
 }

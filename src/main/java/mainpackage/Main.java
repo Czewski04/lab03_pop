@@ -38,5 +38,4 @@ public class Main {
     }
 }
 
-// obsługa licznych wyjątków
 // ujednolicenie rozmiaru aplikacji

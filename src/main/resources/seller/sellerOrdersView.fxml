@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="575.0" prefWidth="1028.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerControllerOrdersController">
+<AnchorPane prefHeight="575.0" prefWidth="1028.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerOrdersController">
    <children>
       <TableView fx:id="tableView" layoutX="273.0" layoutY="10.0" prefHeight="548.0" prefWidth="740.0" style="-fx-background-color: #242320; -fx-border-color: white;">
          <columns>
@@ -27,7 +27,7 @@
       </Button>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Refresh orders" textFill="WHITE" />
       <Button fx:id="myOffersButton" layoutX="150.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToOffersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Offers" textFill="WHITE" />
-      <TextField fx:id="OrganizerIdTxtField" layoutX="48.0" layoutY="273.0" promptText="Set Organizer ID" style="-fx-background-color: #595959; -fx-text-fill: white;">
+      <TextField fx:id="organizerIdTxtField" layoutX="48.0" layoutY="273.0" promptText="Set Organizer ID" style="-fx-background-color: #595959; -fx-text-fill: white;">
          <font>
             <Font size="14.0" />
          </font>

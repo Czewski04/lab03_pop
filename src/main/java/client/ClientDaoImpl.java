@@ -13,14 +13,15 @@ public class ClientDaoImpl implements ClientDao {
         Connection conn = db.getConnection();
         if(conn != null) {
             Statement statement = conn.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY, offerName TEXT, clientId INT, organizerId INT, eventDate TEXT, placedOrder BOOLEAN, confirmed BOOLEAN)");
-            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO orders(offerName, clientId, organizerId, eventDate, placedOrder, confirmed) VALUES (?, ?, ?, ?, ?, ?)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY, offerName TEXT, offerId INT, clientId INT, organizerId INT, eventDate TEXT, placedOrder BOOLEAN, confirmed BOOLEAN)");
+            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO orders(offerName, clientId, organizerId, eventDate, placedOrder, confirmed, offerId) VALUES (?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, order.getOfferName());
             preparedStatement.setInt(2, order.getClientId());
             preparedStatement.setInt(3, order.getOrganizerId());
             preparedStatement.setString(4,order.getDate());
             preparedStatement.setBoolean(5, order.isPlacedOrder());
             preparedStatement.setBoolean(6, order.isConfirmed());
+            preparedStatement.setInt(7, order.getOfferId());
             preparedStatement.executeUpdate();
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -69,9 +70,14 @@ public class ClientDaoImpl implements ClientDao {
         Connection conn = db.getConnection();
         if(conn != null) {
             Statement statement = conn.createStatement();
-            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM orders WHERE id = ?");
-            preparedStatement.setInt(1, order.getId());
-            preparedStatement.executeUpdate();
+
+            PreparedStatement preparedStatement1 = conn.prepareStatement("UPDATE offers SET clientID = 0 WHERE id = ?");
+            preparedStatement1.setInt(1, order.getOfferId());
+            preparedStatement1.executeUpdate();
+
+            PreparedStatement preparedStatement2 = conn.prepareStatement("DELETE FROM orders WHERE id = ?");
+            preparedStatement2.setInt(1, order.getId());
+            preparedStatement2.executeUpdate();
             statement.close();
             db.closeConnection();
         }

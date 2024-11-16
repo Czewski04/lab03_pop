@@ -1,5 +1,7 @@
 package seller;
 
+import exception.EmptyFieldException;
+import exception.NoSelectedItemException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +22,7 @@ import java.sql.*;
 import java.util.Objects;
 
 
-public class SellerControllerOffersController extends SellerControllerAbstractClass {
+public class SellerOffersController extends SellerControllerAbstractClass {
     @FXML
     private TableView<Offer> tableView;
     @FXML
@@ -38,11 +40,20 @@ public class SellerControllerOffersController extends SellerControllerAbstractCl
 
     public void setOffer() throws SQLException {
         Offer offer = new Offer();
-        offer.setName(nameTxtField.getText());
-        offer.setClientId(0);
-        SellerDaoImpl sellerDao = new SellerDaoImpl();
-        sellerDao.addOffer(offer);
-        refreshData();
+        try{
+            if(nameTxtField.getText().isEmpty()){
+                throw new EmptyFieldException("Empty field");
+            }
+            offer.setName(nameTxtField.getText());
+            offer.setClientId(0);
+            SellerDaoImpl sellerDao = new SellerDaoImpl();
+            sellerDao.addOffer(offer);
+            nameTxtField.clear();
+            refreshData();
+        }catch (EmptyFieldException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
@@ -61,6 +72,7 @@ public class SellerControllerOffersController extends SellerControllerAbstractCl
 
     public void initialize() throws SQLException {
         offersInitialize(idView, offerNameView, clientsIdView);
+        refreshData();
     }
 
     private ObservableList<Offer> showSellerOffers() throws SQLException {
@@ -68,12 +80,22 @@ public class SellerControllerOffersController extends SellerControllerAbstractCl
     }
 
     public void refreshData() throws SQLException {
-        tableView.setItems(showSellerOffers());
+        try{
+            tableView.setItems(showSellerOffers());
+        }catch (SQLException e){
+            System.out.println("no content to display");
+        }
     }
 
     public void deleteOffer() throws SQLException {
         SellerDaoImpl sellerDao = new SellerDaoImpl();
-        sellerDao.deleteOffer(tableView.getSelectionModel().getSelectedItem());
-        refreshData();
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() == null) throw new NoSelectedItemException("No selected item");
+            sellerDao.deleteOffer(tableView.getSelectionModel().getSelectedItem());
+            refreshData();
+        }catch (NoSelectedItemException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }

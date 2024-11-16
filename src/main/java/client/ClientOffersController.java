@@ -63,7 +63,11 @@ public class ClientOffersController extends SellerControllerAbstractClass {
     }
 
     public void refreshTableView() throws SQLException {
-        tableView.setItems(showClientOffers());
+        try{
+            tableView.setItems(showClientOffers());
+        }catch (SQLException e){
+            System.out.println("no content to display");
+        }
     }
 
     public void setOrder(Offer offer) throws SQLException {
@@ -71,6 +75,7 @@ public class ClientOffersController extends SellerControllerAbstractClass {
         order.setOfferName(offer.getName());
         order.setClientId(client.getId());
         order.setDate("");
+        order.setOfferId(offer.getId());
         ClientDaoImpl clientDao = new ClientDaoImpl();
         clientDao.makeOrder(order);
     }

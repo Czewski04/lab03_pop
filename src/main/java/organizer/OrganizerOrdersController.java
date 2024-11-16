@@ -1,6 +1,5 @@
 package organizer;
 
-import client.ClientDaoImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +24,7 @@ public class OrganizerOrdersController extends OrganizerControllerAbstractClass 
     Organizer organizer = new Organizer();
 
     @FXML
-    private TextField DateTxtField;
+    private TextField dateTxtField;
     @FXML
     private TableColumn<Order, Integer> organizerIdView;
     @FXML
@@ -49,6 +48,7 @@ public class OrganizerOrdersController extends OrganizerControllerAbstractClass 
 
     public void initializeTableView() throws SQLException {
         ordersInitialize(idView, offerNameView,organizerIdView,dateView,confirmedView,placedOrderView,clientIdView);
+        refreshTableView();
     }
 
     private ObservableList<Order> showOrganizerOrders() throws SQLException {
@@ -65,14 +65,18 @@ public class OrganizerOrdersController extends OrganizerControllerAbstractClass 
     }
 
     public void refreshTableView() throws SQLException {
-        tableView.setItems(showOrganizerOrders());
+        try{
+            tableView.setItems(showOrganizerOrders());
+        }catch (SQLException e){
+            System.out.println("no content to display");
+        }
     }
 
     public void setDate() throws SQLException {
-        tableView.getSelectionModel().getSelectedItem().setDate(Objects.requireNonNull(DateTxtField.getText()));
-        OrganizerDaoImpl organizerDao = new OrganizerDaoImpl();
-        organizerDao.setDate(tableView.getSelectionModel().getSelectedItem());
+        updateDate(tableView, dateTxtField);
+        dateTxtField.clear();
         refreshTableView();
+
     }
 
     public void switchToFinishedOrdersView(ActionEvent actionEvent) throws IOException {

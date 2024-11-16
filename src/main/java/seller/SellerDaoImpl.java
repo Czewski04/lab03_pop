@@ -45,7 +45,7 @@ public class SellerDaoImpl implements SellerDao {
     }
 
     @Override
-    public void cancelPlacedOrders(Order order) throws SQLException {
+    public void placedOrdersUpdate(Order order) throws SQLException {
         DatabaseConnector db = new DatabaseConnector();
         Connection conn = db.getConnection();
         if(conn != null) {

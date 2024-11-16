@@ -1,5 +1,7 @@
 package seller;
 
+import exception.EmptyFieldException;
+import exception.NoSelectedItemException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,9 +21,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class SellerControllerOrdersController extends SellerControllerAbstractClass {
+public class SellerOrdersController extends SellerControllerAbstractClass {
     @FXML
-    private TextField OrganizerIdTxtField;
+    private TextField organizerIdTxtField;
     @FXML
     private TableColumn<Order, Integer> organizerIdView;
     @FXML
@@ -45,6 +47,7 @@ public class SellerControllerOrdersController extends SellerControllerAbstractCl
 
     public void initialize() throws SQLException {
         ordersInitialize(idView, offerNameView,organizerIdView,dateView,confirmedView,placedOrderView,clientIdView);
+        refreshTableView();
     }
 
     private ObservableList<Order> showSellerOrders() throws SQLException {
@@ -66,14 +69,28 @@ public class SellerControllerOrdersController extends SellerControllerAbstractCl
     }
 
     public void refreshTableView() throws SQLException {
-        tableView.setItems(showSellerOrders());
+        try{
+            tableView.setItems(showSellerOrders());
+        }catch (SQLException e){
+            System.out.println("no content to display");
+        }
     }
 
     public void placeOrder() throws SQLException {
-        tableView.getSelectionModel().getSelectedItem().setPlacedOrder(true);
-        tableView.getSelectionModel().getSelectedItem().setOrganizerId(Integer.parseInt(Objects.requireNonNull(OrganizerIdTxtField.getText())));
-        SellerDaoImpl sellerDao = new SellerDaoImpl();
-        sellerDao.placeOrder(tableView.getSelectionModel().getSelectedItem());
-        refreshTableView();
+        try{
+            if(organizerIdTxtField.getText().isEmpty()) throw new EmptyFieldException("Empty field");
+            if(tableView.getSelectionModel().getSelectedItem() == null) throw new NoSelectedItemException("No item selected");
+            tableView.getSelectionModel().getSelectedItem().setPlacedOrder(true);
+            tableView.getSelectionModel().getSelectedItem().setOrganizerId(Integer.parseInt(Objects.requireNonNull(organizerIdTxtField.getText())));
+            SellerDaoImpl sellerDao = new SellerDaoImpl();
+            sellerDao.placeOrder(tableView.getSelectionModel().getSelectedItem());
+            organizerIdTxtField.clear();
+            refreshTableView();
+        }catch (EmptyFieldException | NoSelectedItemException | NumberFormatException e){
+            if(e.getMessage().equals("Empty field")) System.out.println(e.getMessage());
+            else if(e.getMessage().equals("No item selected")) System.out.println(e.getMessage());
+            else System.out.println("Wrong id format");
+        }
+
     }
 }

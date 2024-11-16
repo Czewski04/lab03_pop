@@ -26,7 +26,7 @@
          </font>
       </Button>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Refresh orders" textFill="WHITE" />
-      <TextField fx:id="DateTxtField" layoutX="48.0" layoutY="273.0" promptText="Set Date" style="-fx-background-color: #595959; -fx-text-fill: white;">
+      <TextField fx:id="dateTxtField" layoutX="48.0" layoutY="273.0" promptText="Set Date" style="-fx-background-color: #595959; -fx-text-fill: white;">
          <font>
             <Font size="14.0" />
          </font>

@@ -93,7 +93,8 @@ public abstract class SellerControllerAbstractClass {
             String date = resultSet.getString("eventDate");
             boolean confirmed = resultSet.getBoolean("confirmed");
             boolean placedOrder = resultSet.getBoolean("placedOrder");
-            data.add(new Order(id, clientId, organizerId, offerName, date, placedOrder, confirmed));
+            int offerId = resultSet.getInt("offerId");
+            data.add(new Order(id, clientId, organizerId, offerName, date, placedOrder, confirmed, offerId));
         }
         return data;
     }

@@ -1,6 +1,6 @@
 package organizer;
 
-import client.ClientDaoImpl;
+import exception.NoSelectedItemException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,14 +16,13 @@ import abstractcontrollerclasses.OrganizerControllerAbstractClass;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class OrganizerEditOrdersController extends OrganizerControllerAbstractClass {
 
     Organizer organizer = new Organizer();
 
     @FXML
-    private TextField DateTxtField;
+    private TextField dateTxtField;
     @FXML
     private TableColumn<Order, Integer> organizerIdView;
     @FXML
@@ -47,6 +46,7 @@ public class OrganizerEditOrdersController extends OrganizerControllerAbstractCl
 
     public void initializeTableView() throws SQLException {
         ordersInitialize(idView, offerNameView,organizerIdView,dateView,confirmedView,placedOrderView,clientIdView);
+        refreshTableView();
     }
 
     private ObservableList<Order> showOrganizerOrders() throws SQLException {
@@ -63,7 +63,11 @@ public class OrganizerEditOrdersController extends OrganizerControllerAbstractCl
     }
 
     public void refreshTableView() throws SQLException {
-        tableView.setItems(showOrganizerOrders());
+        try{
+            tableView.setItems(showOrganizerOrders());
+        }catch (SQLException e){
+            System.out.println("no content to display");
+        }
     }
 
     public void switchToOrdersView(ActionEvent actionEvent) throws IOException {
@@ -71,15 +75,19 @@ public class OrganizerEditOrdersController extends OrganizerControllerAbstractCl
     }
 
     public void editDate() throws SQLException {
-        tableView.getSelectionModel().getSelectedItem().setDate(Objects.requireNonNull(DateTxtField.getText()));
-        OrganizerDaoImpl organizerDao = new OrganizerDaoImpl();
-        organizerDao.setDate(tableView.getSelectionModel().getSelectedItem());
+        updateDate(tableView, dateTxtField);
+        dateTxtField.clear();
         refreshTableView();
     }
 
     public void deleteOrder() throws SQLException {
         OrganizerDaoImpl organizerDao = new OrganizerDaoImpl();
-        organizerDao.deleteOrder(tableView.getSelectionModel().getSelectedItem());
-        refreshTableView();
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() == null) throw new NoSelectedItemException("No item selected");
+            organizerDao.deleteOrder(tableView.getSelectionModel().getSelectedItem());
+            refreshTableView();
+        }catch (NoSelectedItemException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

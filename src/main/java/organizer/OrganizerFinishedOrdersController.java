@@ -52,11 +52,16 @@ public class OrganizerFinishedOrdersController extends OrganizerControllerAbstra
     }
 
     public void refreshTableView() throws SQLException {
-        tableView.setItems(showOrganizerOrders());
+        try{
+            tableView.setItems(showOrganizerOrders());
+        }catch (SQLException e){
+            System.out.println("no content to display");
+        }
     }
 
     public void initializeTableView() throws SQLException {
         ordersInitialize(idView, offerNameView,organizerIdView,dateView,confirmedView,placedOrderView,clientIdView);
+        refreshTableView();
     }
 
     private ObservableList<Order> showOrganizerOrders() throws SQLException {
@@ -77,7 +82,8 @@ public class OrganizerFinishedOrdersController extends OrganizerControllerAbstra
             String date = resultSet.getString("eventDate");
             boolean confirmed = resultSet.getBoolean("confirmed");
             boolean placedOrder = resultSet.getBoolean("placedOrder");
-            data.add(new Order(id, clientId, organizerId, offerName, date, placedOrder, confirmed));
+            int offerId = resultSet.getInt("offerId");
+            data.add(new Order(id, clientId, organizerId, offerName, date, placedOrder, confirmed, offerId));
         }
         return data;
     }

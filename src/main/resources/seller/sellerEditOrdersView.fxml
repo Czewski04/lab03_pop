@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="575.0" prefWidth="1028.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerControllerEditOrdersController">
+<AnchorPane prefHeight="575.0" prefWidth="1028.0" style="-fx-background-color: #242320;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seller.SellerEditOrdersController">
    <children>
       <TableView fx:id="tableView" layoutX="273.0" layoutY="10.0" prefHeight="548.0" prefWidth="740.0" style="-fx-background-color: #242320; -fx-border-color: white;">
          <columns>
@@ -20,19 +20,24 @@
             <TableColumn fx:id="confirmedView" prefWidth="122.4000244140625" style="-fx-background-color: black; -fx-text-fill: white;" text="Confirmed by You" />
          </columns>
       </TableView>
-      <Button layoutX="15.0" layoutY="195.0" mnemonicParsing="false" onAction="#editOrder" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Edit organizer ID" textFill="WHITE">
+      <Button layoutX="15.0" layoutY="195.0" mnemonicParsing="false" onAction="#editOrganizerId" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Edit organizer ID" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Refresh orders" textFill="WHITE" />
       <Button fx:id="myOffersButton" layoutX="150.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToOrdersView" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #595959;" text="Orders" textFill="WHITE" />
-      <TextField fx:id="OrganizerIdTxtField" layoutX="49.0" layoutY="152.0" promptText="Set Organizer ID" style="-fx-background-color: #595959; -fx-text-fill: white;">
+      <TextField fx:id="organizerIdTxtField" layoutX="49.0" layoutY="152.0" promptText="Set Organizer ID" style="-fx-background-color: #595959; -fx-text-fill: white;">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
       <Button layoutX="15.0" layoutY="267.0" mnemonicParsing="false" onAction="#cancelPlacedOrder" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Cancel placed order" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="15.0" layoutY="323.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="42.0" prefWidth="242.0" style="-fx-background-color: #595959;" text="Place order" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>

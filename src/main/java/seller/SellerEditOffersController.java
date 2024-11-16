@@ -1,5 +1,7 @@
 package seller;
 
+import exception.EmptyFieldException;
+import exception.NoSelectedItemException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +19,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class SellerControllerEditOffersController extends SellerControllerAbstractClass {
+public class SellerEditOffersController extends SellerControllerAbstractClass {
 
     @FXML
     private TableView<Offer> tableView;
@@ -36,6 +38,7 @@ public class SellerControllerEditOffersController extends SellerControllerAbstra
 
     public void initialize() throws SQLException {
         offersInitialize(idView, offerNameView, clientsIdView);
+        refreshData();
     }
 
     private ObservableList<Offer> showSellerOffers() throws SQLException {
@@ -43,7 +46,11 @@ public class SellerControllerEditOffersController extends SellerControllerAbstra
     }
 
     public void refreshData() throws SQLException {
-        tableView.setItems(showSellerOffers());
+        try{
+            tableView.setItems(showSellerOffers());
+        }catch (SQLException e){
+            System.out.println("no content to display");
+        }
     }
 
     public void switchToOffersView(ActionEvent actionEvent) throws IOException {
@@ -51,9 +58,17 @@ public class SellerControllerEditOffersController extends SellerControllerAbstra
     }
 
     public void editOffer() throws SQLException {
-        tableView.getSelectionModel().getSelectedItem().setName(Objects.requireNonNull(nameTxtField.getText()));
-        SellerDaoImpl sellerDao = new SellerDaoImpl();
-        sellerDao.updateOffer(tableView.getSelectionModel().getSelectedItem());
-        refreshData();
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() == null) throw new NoSelectedItemException("No selected item");
+            if(nameTxtField.getText().isEmpty()) throw new EmptyFieldException("Empty field");
+            tableView.getSelectionModel().getSelectedItem().setName(Objects.requireNonNull(nameTxtField.getText()));
+            SellerDaoImpl sellerDao = new SellerDaoImpl();
+            sellerDao.updateOffer(tableView.getSelectionModel().getSelectedItem());
+            nameTxtField.clear();
+            refreshData();
+        }catch (EmptyFieldException | NoSelectedItemException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }

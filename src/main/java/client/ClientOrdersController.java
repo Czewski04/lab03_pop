@@ -1,6 +1,8 @@
 package client;
 
 import databaseconnectivity.DatabaseConnector;
+import exception.NoSelectedItemException;
+import exception.NotReadyEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -71,7 +73,8 @@ public class ClientOrdersController {
             String date = resultSet.getString("eventDate");
             boolean confirmed = resultSet.getBoolean("confirmed");
             boolean placedOrder = resultSet.getBoolean("placedOrder");
-            data.add(new Order(id, clientId, organizerId, offerName, date, placedOrder, confirmed));
+            int offerId  = resultSet.getInt("offerId");
+            data.add(new Order(id, clientId, organizerId, offerName, date, placedOrder, confirmed, offerId));
         }
         return data;
     }
@@ -89,7 +92,11 @@ public class ClientOrdersController {
         stage.show();
     }
     public void refreshTableView() throws SQLException {
-        tableView.setItems(showClientOrders());
+        try{
+            tableView.setItems(showClientOrders());
+        }catch (SQLException e){
+            System.out.println("no content to display");
+        }
     }
 
     public void setClientLogin(int id){
@@ -103,22 +110,26 @@ public class ClientOrdersController {
 
     public void confirmDate() throws SQLException {
         try{
-            if(tableView.getSelectionModel().getSelectedItem().getDate().isEmpty()) throw new Exception("Event isn't ready to confirm");
-            if(tableView.getSelectionModel().getSelectedItem().isConfirmed()) throw new Exception("Event is already confirmed");
-        } catch (Exception e) {
-            e.printStackTrace();
+            if(tableView.getSelectionModel().getSelectedItem() == null) throw new NoSelectedItemException("No item selected");
+            if(tableView.getSelectionModel().getSelectedItem().getDate().isEmpty()) throw new NotReadyEvent("Event isn't ready to confirm");
+            tableView.getSelectionModel().getSelectedItem().setConfirmed(true);
+            ClientDaoImpl clientDao = new ClientDaoImpl();
+            clientDao.acceptEventDate(tableView.getSelectionModel().getSelectedItem());
+            refreshTableView();
+        } catch (NoSelectedItemException | NotReadyEvent e) {
             System.out.println(e.getMessage());
-            return;
         }
-        tableView.getSelectionModel().getSelectedItem().setConfirmed(true);
-        ClientDaoImpl clientDao = new ClientDaoImpl();
-        clientDao.acceptEventDate(tableView.getSelectionModel().getSelectedItem());
-        refreshTableView();
+
     }
 
     public void deleteOrder() throws SQLException {
         ClientDaoImpl clientDao = new ClientDaoImpl();
-        clientDao.deleteOrder(tableView.getSelectionModel().getSelectedItem());
-        refreshTableView();
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() == null) throw new NoSelectedItemException("No item selected");
+            clientDao.deleteOrder(tableView.getSelectionModel().getSelectedItem());
+            refreshTableView();
+        }catch (NoSelectedItemException e){
+            System.out.println(e.getMessage());
+        }
     }
 }
