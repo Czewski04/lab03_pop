@@ -103,4 +103,17 @@ public class SellerDaoImpl implements SellerDao {
         }
     }
 
+    @Override
+    public void clearDatabase() throws SQLException {
+        DatabaseConnector db = new DatabaseConnector();
+        Connection conn = db.getConnection();
+        if(conn != null) {
+            Statement statement = conn.createStatement();
+            statement.executeUpdate("DROP TABLE IF EXISTS offers");
+            statement.executeUpdate("DROP TABLE IF EXISTS orders");
+            statement.close();
+            db.closeConnection();
+        }
+    }
+
 }

@@ -2,7 +2,7 @@ package client;
 
 import databaseconnectivity.DatabaseConnector;
 import exception.NoSelectedItemException;
-import exception.NotReadyEvent;
+import exception.NotReadyEventException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +16,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import orderoffer.Order;
-import seller.SellerDaoImpl;
 
 import java.io.IOException;
 import java.sql.*;
@@ -111,12 +110,12 @@ public class ClientOrdersController {
     public void confirmDate() throws SQLException {
         try{
             if(tableView.getSelectionModel().getSelectedItem() == null) throw new NoSelectedItemException("No item selected");
-            if(tableView.getSelectionModel().getSelectedItem().getDate().isEmpty()) throw new NotReadyEvent("Event isn't ready to confirm");
+            if(tableView.getSelectionModel().getSelectedItem().getDate().isEmpty()) throw new NotReadyEventException("Event isn't ready to confirm");
             tableView.getSelectionModel().getSelectedItem().setConfirmed(true);
             ClientDaoImpl clientDao = new ClientDaoImpl();
             clientDao.acceptEventDate(tableView.getSelectionModel().getSelectedItem());
             refreshTableView();
-        } catch (NoSelectedItemException | NotReadyEvent e) {
+        } catch (NoSelectedItemException | NotReadyEventException e) {
             System.out.println(e.getMessage());
         }
 

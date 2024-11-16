@@ -2,7 +2,6 @@ package organizer;
 
 
 import client.Client;
-import client.ClientOffersController;
 import exception.WrongLoginException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -33,4 +33,9 @@
          <Font size="14.0" />
       </font>
    </Button>
+   <Button layoutX="60.0" layoutY="442.0" mnemonicParsing="false" onAction="#clearDatabase" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #595959;" text="Clear database" textAlignment="CENTER" textFill="WHITE">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Button>
 </AnchorPane>

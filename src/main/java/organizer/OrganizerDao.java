@@ -1,6 +1,5 @@
 package organizer;
 
-import orderoffer.Offer;
 import orderoffer.Order;
 
 import java.sql.SQLException;

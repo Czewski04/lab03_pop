@@ -58,7 +58,7 @@ public class ClientOffersController extends SellerControllerAbstractClass {
         try{
             initializeTableView();
         }catch (SQLException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

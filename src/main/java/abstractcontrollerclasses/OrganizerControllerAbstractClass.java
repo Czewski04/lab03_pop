@@ -2,7 +2,7 @@ package abstractcontrollerclasses;
 
 import databaseconnectivity.DatabaseConnector;
 import exception.EmptyFieldException;
-import exception.InvalidDate;
+import exception.InvalidDateException;
 import exception.NoSelectedItemException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -81,11 +81,11 @@ public abstract class OrganizerControllerAbstractClass {
         try{
             if(tableView.getSelectionModel().getSelectedItem() == null) throw new NoSelectedItemException("No item selected");
             if(dateTxtField.getText().isEmpty()) throw new EmptyFieldException("Empty field");
-            if(!isValidDate(dateTxtField.getText())) throw new InvalidDate("Invalid Date");
+            if(!isValidDate(dateTxtField.getText())) throw new InvalidDateException("Invalid Date");
             tableView.getSelectionModel().getSelectedItem().setDate(Objects.requireNonNull(dateTxtField.getText()));
             OrganizerDaoImpl organizerDao = new OrganizerDaoImpl();
             organizerDao.setDate(tableView.getSelectionModel().getSelectedItem());
-        }catch (NoSelectedItemException | EmptyFieldException | InvalidDate e){
+        }catch (NoSelectedItemException | EmptyFieldException | InvalidDateException e){
             System.out.println(e.getMessage());
         }
     }

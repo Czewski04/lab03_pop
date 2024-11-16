@@ -58,7 +58,7 @@ public class OrganizerEditOrdersController extends OrganizerControllerAbstractCl
         try{
             initializeTableView();
         }catch (SQLException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

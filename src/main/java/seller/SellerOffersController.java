@@ -98,4 +98,10 @@ public class SellerOffersController extends SellerControllerAbstractClass {
         }
 
     }
+
+    public void clearDatabase() throws SQLException {
+        SellerDaoImpl sellerDao = new SellerDaoImpl();
+        sellerDao.clearDatabase();
+        initialize();
+    }
 }

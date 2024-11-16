@@ -8,13 +8,13 @@ public class DatabaseConnector {
     private Connection connection;
 
     public DatabaseConnector(){
-        String url = "jdbc:sqlite:src/main/resources/database.db";
+        String url = "jdbc:sqlite:src/database.db";
         try{
             connection = DriverManager.getConnection(url);
             System.out.println("Connected to database");
 
         }catch(SQLException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             System.out.println("Error occured while connecting to database");
         }
     }
@@ -30,7 +30,7 @@ public class DatabaseConnector {
             }
             System.out.println("Connection closed");
         }catch(SQLException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

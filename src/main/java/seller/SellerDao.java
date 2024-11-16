@@ -12,4 +12,5 @@ public interface SellerDao {
     void updateOrganizerId(Order order) throws SQLException;
     void updateOffer(Offer offer) throws SQLException;
     void deleteOffer(Offer offer) throws SQLException;
+    void clearDatabase() throws SQLException;
 }
